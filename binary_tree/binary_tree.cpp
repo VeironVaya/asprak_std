@@ -107,6 +107,58 @@ address findMin(address root) {
     return current;
 }
 
+address findMax(address root) {
+    address current = root;
+    while (current && current->right != nullptr) {
+        current = current->right;
+    }
+    return current;
+}
+
+int hitungSize(address root) {
+    if (root == nullptr) {
+        return 0;
+    }
+    return 1 + hitungSize(root->left) + hitungSize(root->right);
+}
+
+void levelOrderTraversal(address root) {
+    if (root == nullptr) {
+        cout << "Tree kosong!" << endl;
+        return;
+    }
+    queue<address> q;
+    q.push(root);
+    while (!q.empty()) {
+        address curr = q.front();
+        q.pop();
+        cout << "ID: " << curr->info.idProduk << ", Nama: " << curr->info.namaProduk << ", Harga: " << curr->info.harga << endl;
+        if (curr->left != nullptr) q.push(curr->left);
+        if (curr->right != nullptr) q.push(curr->right);
+    }
+}
+
+bool isBSTUtil(address root, double minVal, double maxVal, bool hasMin, bool hasMax) {
+    if (root == nullptr) return true;
+    if (hasMin && root->info.harga <= minVal) return false;
+    if (hasMax && root->info.harga >= maxVal) return false;
+    return isBSTUtil(root->left, minVal, root->info.harga, hasMin, true) &&
+           isBSTUtil(root->right, root->info.harga, maxVal, true, hasMax);
+}
+
+bool isValidBST(address root) {
+    return isBSTUtil(root, 0, 0, false, false);
+}
+
+void mirrorTree(address root) {
+    if (root == nullptr) return;
+    address temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+    mirrorTree(root->left);
+    mirrorTree(root->right);
+}
+
 address deleteNode(address root, double harga) {
     if (root == nullptr) {
         return root;

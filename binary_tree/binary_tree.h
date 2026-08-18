@@ -2,6 +2,7 @@
 #define BINARY_TREE_H_INCLUDED
 
 #include <iostream>
+#include <queue>
 using namespace std;
 
 struct Produk {
@@ -37,6 +38,11 @@ void postOrder(address root);
 int tinggiTree(address root);
 int hitungLeaf(address root);
 address findMin(address root);
+address findMax(address root);
+int hitungSize(address root);
+void levelOrderTraversal(address root);
+bool isValidBST(address root);
+void mirrorTree(address root);
 address deleteNode(address root, double harga);
 
 #endif
